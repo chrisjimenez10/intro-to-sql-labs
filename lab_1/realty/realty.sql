@@ -44,7 +44,6 @@
          4 |      600
 (1 row)
 
-
 -- 6. The storefronts that have kitchens
 -- Query: realty=# SELECT * FROM storefronts WHERE kitchens = TRUE;
 -- Output:  id | kitchens | square_footage | outdoor_seating | company_id
@@ -58,7 +57,6 @@
   7 | t        |            700 | t               |          2
 (7 rows)
 
-
 -- 7. The storefront with the highest square footage and outdoor seating
 -- Query: realty=# SELECT * FROM storefronts WHERE outdoor_seating = TRUE ORDER BY square_footage DESC LIMIT 1;
 -- Output:  id | kitchens | square_footage | outdoor_seating | company_id
@@ -71,10 +69,21 @@
 (5 rows)
 
 -- 8. The office with the lowest number of cubicles
--- Query:
--- Output:
-
+-- Query: realty=# SELECT * FROM offices ORDER BY cubicles ASC LIMIT 1;
+-- Output:  id | bathrooms | cubicles | company
+----+-----------+----------+---------
+  6 |         1 |      250 | Netflix
+(1 row)
 
 -- 9. The office with the most cubicles and bathrooms
--- Query:
--- Output: 
+-- Query: realty=# WITH max_cubicles AS (
+realty(# SELECT * FROM offices ORDER BY cubicles DESC LIMIT 1),
+realty-# max_bathrooms AS (
+realty(# SELECT * FROM offices ORDER BY bathrooms DESC LIMIT 1)
+realty-# SELECT 'Max Cubicles' AS category, * FROM max_cubicles
+realty-# UNION ALL SELECT 'Max Bathrooms' AS category, * FROM max_bathrooms;
+-- Output:    category    | id | bathrooms | cubicles |  company
+---------------+----+-----------+----------+------------
+ Max Cubicles  |  4 |         5 |      850 | Salesforce
+ Max Bathrooms |  4 |         5 |      850 | Salesforce
+(2 rows)
